@@ -1,0 +1,26 @@
+.parent{
+    height: 100vh;
+    width: 100vw;
+}
+
+.navbar{
+    height: 12%;
+    background-color: rgb(205, 244, 229);
+    display: flex;
+    align-items: center;
+}
+
+.contentsContainer{
+    height: 88%;
+    padding: 10px 120px;
+    box-sizing: border-box;
+}
+
+.breadCrumbContainer{
+    width: fit-content;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: green;
+    font-weight: bolder;
+    margin-left: 120px;
+}
