@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './ProductList.module.css';
 import gridviewIcon from '../assets/gridviewIcon.png';
 import listviewIcon from '../assets/listviewIcon.png';
 import GridViewContainer from '../GridViewContainer/GridViewContainer';
+import ListViewContainer from '../ListViewContainer/ListViewContainer';
+import 'toolcool-range-slider';
 
-const ProductList = () => {
+const ProductList = (props) => {
+    const [currentView, setCurrentView] = useState("grid");
+
+    function handleChange(){
+        console.log(props.categoryList);
+    }
     return (
         <div className={styles.body}>
             <div className={styles.left}>
@@ -17,9 +24,14 @@ const ProductList = () => {
                     </div>
                     <div className={styles.categoryList}>
                         <div className={styles.categoryItems} style={{textDecoration:"underline"}}>All</div>
-                        <div className={styles.categoryItems}>Office</div>
+                        {props.categoryList.map((category,index)=>{
+                            return (
+                                <div className={styles.categoryItems}>{category.name}</div>
+                            )
+                        })}
+                        {/* <div className={styles.categoryItems}>Office</div>
                         <div className={styles.selectedCategoryItem}>Kitchen</div>
-                        <div className={styles.categoryItems}>Batchroom</div>
+                        <div className={styles.categoryItems}>Batchroom</div> */}
                     </div>
                 </div>
                 <div className={styles.categoryContainer}>
@@ -40,14 +52,28 @@ const ProductList = () => {
                         <div className={styles.colors} style={{backgroundColor: "green", border: "2px solid black"}}></div>
                     </div>
                 </div>
+                <div className={styles.categoryContainer}>
+                    <div className={styles.listTitle}>Price</div>
+                    <div className={styles.price}>$1234.00</div>
+                    <div className={styles.sliderContainer}>
+                        <toolcool-range-slider min="100" max="12000" step="100" slider-width="100%" slider-height="5px" slider-bg="#1E1E1E" pointer-width="13px" pointer-height="13px" onClick={handleChange}></toolcool-range-slider>
+                    </div>
+                </div>
+                <div className={styles.shippingContainer}>
+                    <div className={styles.text}>Free Shipping</div>
+                    <div className={styles.checkboxContainer}>
+                        <input type="checkbox" className={styles.checkbox}></input>
+                    </div>
+                </div>
+                <div className={styles.clearFilters}>Clear Filters</div>
             </div>
             <div className={styles.right}>
                 <div className={styles.filtersContainer}>
                     <div className={styles.viewIconsContainer}>
-                        <div className={styles.gridIconContainer}>
+                        <div className={styles.gridIconContainer} onClick={()=>setCurrentView("grid")}>
                             <img src={gridviewIcon} alt="error loading" className={styles.gridViewIcon}></img>
                         </div>
-                        <div className={styles.listIconContainer}>
+                        <div className={styles.listIconContainer} onClick={()=>setCurrentView("list")}>
                             <img src={listviewIcon} alt="error loading" className={styles.listViewIcon}></img>
                         </div>
                     </div>
@@ -65,7 +91,8 @@ const ProductList = () => {
                     </div>
                 </div>
                 <div className={styles.cardsContainer}>
-                    <GridViewContainer />
+                    {currentView === "grid" && <GridViewContainer />}
+                    {currentView === "list" && <ListViewContainer />}
                 </div>
             </div>
         </div>

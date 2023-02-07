@@ -1,0 +1,66 @@
+.container{
+    height: 30%;
+    /* border: 1px solid black; */
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.imageContainer{
+    height: 100%;
+    width: 30%;
+    /* border: 1px solid red; */
+}
+
+.image{
+    height: 100%;
+    width: 100%;
+    border-radius: 3px;
+}
+
+.detailsContainer{
+    height: 100%;
+    width: 65%;
+    /* border: 1px solid red; */
+    padding: 10px 0;
+    box-sizing: border-box;
+}
+
+.name{
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.price{
+    color: green;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.details{
+    color: gray;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+    margin: 15px 0;
+}
+
+.detailsBtn{
+    background-color: green;
+    color: white;
+    border-radius: 3px;
+    padding: 4px 10px;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.detailsBtn:hover{
+    cursor: pointer;
+    background-color: rgb(4, 150, 4);
+}
+

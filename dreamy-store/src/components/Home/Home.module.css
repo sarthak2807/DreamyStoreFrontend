@@ -12,7 +12,7 @@
 
 .contentsContainer{
     height: 88%;
-    padding: 10px 120px;
+    padding: 10px 140px;
     box-sizing: border-box;
 }
 
@@ -22,5 +22,5 @@
     letter-spacing: 1px;
     color: green;
     font-weight: bolder;
-    margin-left: 120px;
+    margin-left: 140px;
 }

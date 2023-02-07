@@ -186,3 +186,57 @@
 .colors:hover{
     cursor: pointer;
 }
+
+.price{
+    color: grey;
+    letter-spacing: 0.5px;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.sliderContainer{
+    width: 60%;
+    margin: 12px 0;
+}
+
+.shippingContainer{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.text{
+    color: grey;
+    letter-spacing: 1px;
+    display:flex ;
+    align-items: center;
+}
+
+.checkboxContainer{
+    display: flex;
+    align-items: center;
+}
+
+.checkbox{
+    height: 17px;
+    width: 17px;
+}
+
+.clearFilters{
+    padding: 2px 8px;
+    background-color: rgb(149, 66, 66);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    color: white;
+    width: fit-content;
+    font-size: 12px;
+    letter-spacing: 2px;
+    margin-top: 20px;
+}
+
+.clearFilters:hover{
+    cursor: pointer;
+    background-color: rgb(163, 78, 78);
+}
