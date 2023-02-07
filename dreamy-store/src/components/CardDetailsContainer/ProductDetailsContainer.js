@@ -1,11 +1,11 @@
 import React from 'react';
 import styles from './ProductDetailsContainer.module.css';
 
-const ProductDetailsContainer = () => {
+const ProductDetailsContainer = (props) => {
     return (
         <div className={styles.container}>
             <div className={styles.upper}>
-                <div className={styles.backBtn}>BACK TO PRODUCTS</div>
+                <div className={styles.backBtn} onClick={()=>props.togglePage(0)}>BACK TO PRODUCTS</div>
             </div>
             <div className={styles.infoContainer}>
                 <div className={styles.left}>
