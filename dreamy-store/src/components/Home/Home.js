@@ -10,7 +10,6 @@ const Home = () => {
     const [companyList, setCompanyList] = useState([]);
     const [allProductList, setAllProductList] = useState([]);
     const [currentPageIndicator, setCurrentPageIndicator] = useState(0);
-    // const [filteredProductList, setFilteredProductList] = useState([]);
 
     async function fetchAllProducts(){
         const list = await getAllProducts();

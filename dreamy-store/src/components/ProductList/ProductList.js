@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './ProductList.module.css';
 import gridviewIcon from '../assets/gridviewIcon.png';
 import listviewIcon from '../assets/listviewIcon.png';
@@ -7,17 +7,34 @@ import ListViewContainer from '../ListViewContainer/ListViewContainer';
 import 'toolcool-range-slider';
 
 const ProductList = (props) => {
+    const [filteredProductList, setFilteredProductList] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState("All");
     const [currentView, setCurrentView] = useState(
         localStorage.getItem("list")==="true" ? "list" : "grid"
     );
-
     const allProductList = props.allProductList;
+
+    useEffect(()=>{
+        setFilteredProductList(allProductList);
+    },[allProductList])
+
+    function handleCategoryClick(categoryName){
+        setSelectedCategory(categoryName);
+        if(categoryName === "All"){
+            setFilteredProductList(allProductList);
+            return;
+        }
+        const newList = allProductList.filter((product)=>{
+            return product.category.includes(categoryName);
+        })
+        setFilteredProductList(newList);
+    }
 
     function handleChange(){
         console.log(props.categoryList);
     }
     return (
-        <div className={styles.body} onClick={()=>console.log(currentView)}>
+        <div className={styles.body}>
             <div className={styles.left}>
                 <div className={styles.searchboxContainer}>
                     <input type="text" className={styles.searchbox} placeholder='Search'></input>
@@ -27,10 +44,10 @@ const ProductList = (props) => {
                         Category
                     </div>
                     <div className={styles.categoryList}>
-                        <div className={styles.categoryItems} style={{textDecoration:"underline"}}>All</div>
+                        <div className={selectedCategory==="All" ? styles.selectedCategoryItem : styles.categoryItems} onClick={()=>handleCategoryClick("All")} style={{textDecoration:"underline"}}>All</div>
                         {props.categoryList.map((category,index)=>{
                             return (
-                                <div className={styles.categoryItems} key={index}>{category.name}</div>
+                                <div className={selectedCategory===category.name ? styles.selectedCategoryItem : styles.categoryItems} key={index} onClick={()=>handleCategoryClick(category.name)}>{category.name}</div>
                             )
                         })}
                         {/* <div className={styles.selectedCategoryItem}>Kitchen</div> */}
@@ -85,7 +102,7 @@ const ProductList = (props) => {
                             <img src={listviewIcon} alt="error loading" className={styles.listViewIcon}></img>
                         </div>
                     </div>
-                    <div className={styles.productsCountContainer}>29 Products Found</div>
+                    <div className={styles.productsCountContainer}>{filteredProductList.length} Products Found</div>
                     <div className={styles.lineContainer}><hr></hr></div>
                     <div className={styles.filterContainer}>
                         Sort By &nbsp;
@@ -99,8 +116,8 @@ const ProductList = (props) => {
                     </div>
                 </div>
                 <div className={styles.cardsContainer}>
-                    {currentView === "grid" && <GridViewContainer allProductList={allProductList} togglePage={props.togglePage} />}
-                    {currentView === "list" && <ListViewContainer allProductList={allProductList} togglePage={props.togglePage} />}
+                    {currentView === "grid" && <GridViewContainer allProductList={filteredProductList} togglePage={props.togglePage} />}
+                    {currentView === "list" && <ListViewContainer allProductList={filteredProductList} togglePage={props.togglePage} />}
                 </div>
             </div>
         </div>
