@@ -9,7 +9,7 @@ const ListViewContainer = (props) => {
         <div className={styles.container}>
             {allProductList.length>0 && allProductList.map((product,index)=>{
                 return(
-                    <ListCard product={product} key={index} togglePage={props.togglePage} />
+                    <ListCard product={product} key={index} />
                 )
             })}
         </div>

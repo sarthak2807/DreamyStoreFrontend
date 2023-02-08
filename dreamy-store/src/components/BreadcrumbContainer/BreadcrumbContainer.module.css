@@ -1,0 +1,17 @@
+.breadCrumbContainer{
+    width: fit-content;
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+    color: green;
+    font-weight: bolder;
+    margin-left: 140px;
+}
+
+.currentBreadcrumb{
+    color: rgb(6, 191, 6);
+}
+
+.breadcrumb:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}

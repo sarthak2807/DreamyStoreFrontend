@@ -3,13 +3,15 @@ import styles from './Home.module.css';
 import ProductList from '../ProductList/ProductList';
 import ProductDetailsContainer from '../CardDetailsContainer/ProductDetailsContainer';
 import { getAllCategories, getColors, getCompanies, getAllProducts } from '../api/discover';
+import {BrowserRouter, Routes, Route, useParams} from "react-router-dom";
+import BreadcrumbContainer from '../BreadcrumbContainer/BreadcrumbContainer';
 
 const Home = () => {
     const [categoryList, setCategoryList] = useState([]);
     const [colorList, setColorList] = useState([]);
     const [companyList, setCompanyList] = useState([]);
     const [allProductList, setAllProductList] = useState([]);
-    const [currentPageIndicator, setCurrentPageIndicator] = useState(0);
+    const [productName, setProductName] = useState("");
 
     async function fetchAllProducts(){
         const list = await getAllProducts();
@@ -41,13 +43,15 @@ const Home = () => {
     return (
         <div className={styles.parent}>
             <div className={styles.navbar}>
-                <div className={styles.breadCrumbContainer}>
-                    Home / Products
-                </div>
+                <BreadcrumbContainer productName={productName} setProductName={setProductName} />
             </div>
             <div className={styles.contentsContainer}>
-                {currentPageIndicator===0 && <ProductList categoryList={categoryList} colorList={colorList} companyList={companyList} allProductList={allProductList} togglePage={setCurrentPageIndicator} />}
-                {currentPageIndicator===1 && <ProductDetailsContainer togglePage={setCurrentPageIndicator}/>}
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element = { <ProductList categoryList={categoryList} colorList={colorList} companyList={companyList} allProductList={allProductList} /> }></Route>
+                        <Route path="/:productId" element = { <ProductDetailsContainer allProductList={allProductList} setProductName={setProductName} /> }></Route>
+                    </Routes>
+                </BrowserRouter>
             </div>
         </div>
     );

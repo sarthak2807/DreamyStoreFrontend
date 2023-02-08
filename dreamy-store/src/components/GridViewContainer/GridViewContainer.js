@@ -8,7 +8,7 @@ const GridViewContainer = (props) => {
         <div className={styles.container}>
             {allProductList.length>0 && allProductList.map((product,index)=>{
                 return(
-                    <GridCard product={product} key={index} togglePage={props.togglePage} />
+                    <GridCard product={product} key={index} />
                 )
             })}
             {/* <GridCard />
