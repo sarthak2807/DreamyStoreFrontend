@@ -77,6 +77,7 @@ const ProductList = (props) => {
         })
         setDropdownValue("");
         setSortingValue("default");
+        setPriceSlider(100);
     }
 
     useEffect(()=>{
@@ -152,6 +153,13 @@ const ProductList = (props) => {
     }
 
     const [dropdownValue, setDropdownValue] = useState("");
+    const [priceSlider, setPriceSlider] = useState(100);
+
+    const $slider = document.getElementById('slider');
+    $slider && $slider.addEventListener('change',(e)=>{
+        setFilters({...filters, price: e.target.value});
+        setPriceSlider(e.target.value);
+    })
 
     return (
         <div className={styles.body}>
@@ -196,9 +204,9 @@ const ProductList = (props) => {
                 </div>
                 <div className={styles.categoryContainer}>
                     <div className={styles.listTitle}>Price</div>
-                    <div className={styles.price}>$1234.00</div>
+                    <div className={styles.price}>${priceSlider}.00</div>
                     <div className={styles.sliderContainer}>
-                        <toolcool-range-slider min="100" max="12000" step="100" slider-width="100%" slider-height="5px" slider-bg="#1E1E1E" pointer-width="13px" pointer-height="13px" onClick={""}></toolcool-range-slider>
+                        <toolcool-range-slider id="slider" min="100" max="2000" value={priceSlider} step="200" slider-width="100%" slider-height="10px" slider-bg="aliceblue" slider-bg-fill="blue" pointer-width="13px" pointer-height="13px"></toolcool-range-slider>
                     </div>
                 </div>
                 <div className={styles.shippingContainer}>
