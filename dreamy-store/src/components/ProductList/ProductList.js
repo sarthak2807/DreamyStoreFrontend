@@ -7,7 +7,9 @@ import ListViewContainer from '../ListViewContainer/ListViewContainer';
 import 'toolcool-range-slider';
 
 const ProductList = (props) => {
+    const [inputValue, setInputValue] = useState("");
     const [filteredProductList, setFilteredProductList] = useState([]);
+    const [sortingValue, setSortingValue] = useState("default");
     const [currentView, setCurrentView] = useState(
         localStorage.getItem("list")==="true" ? "list" : "grid"
     );
@@ -73,17 +75,89 @@ const ProductList = (props) => {
             price: "All",
             shipping: "All"
         })
+        setDropdownValue("");
+        setSortingValue("default");
     }
 
     useEffect(()=>{
         isChecked ? setFilters({...filters, shipping: "free"}) : setFilters({...filters, shipping:"All"});
     },[isChecked])
 
+    const [syncSort, setSyncSort] = useState(true);
+
+    function handleSort(e){
+        const sortingType = e.target.value;
+        let list = filteredProductList;
+        setSyncSort(!syncSort);
+        setSortingValue(e.target.value);
+        if(sortingType==="asc"){
+            list = list.sort((a,b)=>{
+                return a.price - b.price ;
+            })
+        }
+        if(sortingType==="dsc"){
+            list = list.sort((a,b)=>{
+                return b.price - a.price ;
+            })
+        }
+
+        if(sortingType==="aToZ"){
+            list = list.sort((a,b)=>{
+                if(a.name < b.name){
+                    return -1;
+                }
+                if(a.name > b.name){
+                    return 1;
+                }
+                return 0;
+            })
+        }
+
+        if(sortingType==="zToA"){
+            list = list.sort((a,b)=>{
+                if(a.name < b.name){
+                    return 1;
+                }
+                if(a.name > b.name){
+                    return -1;
+                }
+                return 0;
+            })
+        }
+        setFilteredProductList(list);
+    }
+
+    function handleSearch(e){
+        if(e.code === "Enter"){
+            let searchInput = inputValue.toLowerCase();
+            let products = allProductList;
+            let list=[];
+
+            for(var i=0; i<products.length; i++){
+                let productName = products[i].name.toLowerCase();
+                if(productName.match(searchInput)){
+                    list.push(products[i]);
+                    continue;
+                }
+                for(var j=0;j<products[i].category.length;j++){
+                    if(products[i].category[j].toLowerCase() === searchInput){
+                        list.push(products[i]);
+                        break;
+                    }
+                }
+            }
+            setFilteredProductList(list);
+            setInputValue("");
+        }
+    }
+
+    const [dropdownValue, setDropdownValue] = useState("");
+
     return (
         <div className={styles.body}>
             <div className={styles.left}>
                 <div className={styles.searchboxContainer}>
-                    <input type="text" className={styles.searchbox} placeholder='Search'></input>
+                    <input type="text" className={styles.searchbox} onChange={(e)=>setInputValue(e.target.value)} onKeyUp={handleSearch} placeholder='Search'></input>
                 </div>
                 <div className={styles.categoryContainer}>
                     <div className={styles.listTitle}>
@@ -100,7 +174,7 @@ const ProductList = (props) => {
                 </div>
                 <div className={styles.categoryContainer}>
                     <div className={styles.listTitle}>Company</div>
-                    <select name="company" className={styles.selectCompany} onChange={(e)=>setFilters({...filters, company: e.target.value})}>
+                    <select name="company" className={styles.selectCompany} value={dropdownValue} onChange={function(e){setFilters({...filters, company: e.target.value}); setDropdownValue(e.target.value)}}>
                             <option value="All">All</option>
                             {props.companyList.map((company,index)=>{
                                 return(
@@ -118,8 +192,6 @@ const ProductList = (props) => {
                                 <div className={styles.colors} onClick={()=>setFilters({ ...filters, color: color.name })} key={index} style={{backgroundColor: color.name, border: filters.color===color.name?"2px solid black":""}}></div>
                             )
                         })}
-                        {/* <div className={styles.colors} style={{backgroundColor: "red"}}></div> */}
-                        {/* <div className={styles.colors} ></div> */}
                     </div>
                 </div>
                 <div className={styles.categoryContainer}>
@@ -132,7 +204,7 @@ const ProductList = (props) => {
                 <div className={styles.shippingContainer}>
                     <div className={styles.text}>Free Shipping</div>
                     <div className={styles.checkboxContainer}>
-                        <input type="checkbox" onClick={()=>setIsChecked(!isChecked)} className={styles.checkbox}></input>
+                        <input type="checkbox" onChange={()=>setIsChecked(!isChecked)} className={styles.checkbox}></input>
                     </div>
                 </div>
                 <div className={styles.clearFilters} onClick={clearFilters}>Clear Filters</div>
@@ -141,9 +213,9 @@ const ProductList = (props) => {
                 <div className={styles.filtersContainer}>
                     <div className={styles.viewIconsContainer}>
                         <div className={styles.gridIconContainer} onClick={function(){setCurrentView("grid"); localStorage.list = false;}}>
-                            <img src={gridviewIcon} alt="error loading" className={styles.gridViewIcon}></img>
+                            <img style={{boxShadow: currentView==="grid"&& "0px 0px 5px 3px grey"}} src={gridviewIcon} alt="error loading" className={styles.gridViewIcon}></img>
                         </div>
-                        <div className={styles.listIconContainer} onClick={function(){setCurrentView("list"); localStorage.list = true;}}>
+                        <div className={styles.listIconContainer} style={{boxShadow: currentView==="list" && "0px 0px 5px 5px grey"}} onClick={function(){setCurrentView("list"); localStorage.list = true;}}>
                             <img src={listviewIcon} alt="error loading" className={styles.listViewIcon}></img>
                         </div>
                     </div>
@@ -151,18 +223,18 @@ const ProductList = (props) => {
                     <div className={styles.lineContainer}><hr></hr></div>
                     <div className={styles.filterContainer}>
                         Sort By &nbsp;
-                        <select name="Filter" className={styles.filter}>
+                        <select name="Filter" value={sortingValue} className={styles.filter} onChange={handleSort}>
                             <option value="default" selected disabled>Choose to sort</option>
                             <option value="asc">Price(low to high)</option>
                             <option value="dsc">Price(high to low)</option>
-                            <option value="true">Name(a-z)</option>
-                            <option value="true">Name(z-a)</option>
+                            <option value="aToZ">Name(a-z)</option>
+                            <option value="zToA">Name(z-a)</option>
                         </select>
                     </div>
                 </div>
                 <div className={styles.cardsContainer}>
-                    {currentView === "grid" && <GridViewContainer allProductList={filteredProductList} />}
-                    {currentView === "list" && <ListViewContainer allProductList={filteredProductList} />}
+                    {currentView === "grid" && <GridViewContainer syncSort={syncSort} allProductList={filteredProductList} />}
+                    {currentView === "list" && <ListViewContainer syncSort={syncSort} allProductList={filteredProductList} />}
                 </div>
             </div>
         </div>

@@ -4,6 +4,6 @@
     display: flex;
     flex-wrap: wrap;
     float: left;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* border: 1px solid red; */
 }
