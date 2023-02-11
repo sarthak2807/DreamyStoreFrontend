@@ -61,6 +61,10 @@
 
 .detailsBtn:hover{
     cursor: pointer;
-    background-color: rgb(4, 150, 4);
+    background-color: rgb(11, 172, 11);
+}
+
+.detailsBtn:active{
+    transform: translateY(2px);
 }
 

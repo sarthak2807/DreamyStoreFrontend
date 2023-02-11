@@ -54,7 +54,6 @@
 }
 
 .name{
-    margin-top: -8px;
     font-size: 26px;
     letter-spacing: 1.5px;
     font-weight: bolder;
@@ -65,6 +64,8 @@
     color: rgb(154, 153, 153);
     font-size: 15px;
     letter-spacing: 1px;
+    display: flex;
+    align-items: center;
 }
 
 .price{

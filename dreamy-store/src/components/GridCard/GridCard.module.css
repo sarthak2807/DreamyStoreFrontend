@@ -14,6 +14,10 @@
     box-sizing: border-box;
 }
 
+.container:active{
+    transform: translateY(2px);
+}
+
 .imageContainer{
     height: 82%;
     width: 100%;

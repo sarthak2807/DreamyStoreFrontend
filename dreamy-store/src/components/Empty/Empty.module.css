@@ -1,0 +1,10 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(198, 197, 197);
+    font-size: 28px;
+    font-weight: bolder;
+    height: 100%;
+    width: 100%;
+}

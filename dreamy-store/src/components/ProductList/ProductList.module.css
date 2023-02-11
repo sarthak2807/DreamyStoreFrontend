@@ -239,5 +239,17 @@
 
 .clearFilters:hover{
     cursor: pointer;
-    background-color: rgb(163, 78, 78);
+    background-color: rgb(175, 94, 94);
+}
+
+.clearFilters:active{
+    transform: translateY(2px);
+}
+
+.gridViewIcon:active{
+    transform: translateY(2px);
+}
+
+.listIconContainer:active{
+    transform: translateY(2px);
 }

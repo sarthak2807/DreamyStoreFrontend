@@ -3,6 +3,8 @@ import styles from './ProductDetailsContainer.module.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
+import star from '../assets/star.png';
+import emptyStar from '../assets/emptyStar.png';
 
 const ProductDetailsContainer = (props) => {
     let {productId} = useParams();
@@ -15,7 +17,8 @@ const ProductDetailsContainer = (props) => {
         product && product.images && product.images.map((url)=>{
             images.push({
                 original: url,
-                thumbnail: url
+                thumbnail: url,
+                originalHeight: "360vh",
             })
         })
         setImageList(images);
@@ -32,6 +35,7 @@ const ProductDetailsContainer = (props) => {
         }
         setProduct(product);
         props.setProductName(product.name);
+        setStarCount(product.rating);
     }
 
     useEffect(()=>{
@@ -50,6 +54,24 @@ const ProductDetailsContainer = (props) => {
         }
     },[props.nav])
 
+    const [starCount, setStarCount] = useState(0);
+
+    const [stars,setStars] = useState([]);
+
+    function createDiv(rating){
+        var starContainer = document.getElementById("stars");
+        let stars=[];
+        for(var i=0; i<5; i++) {
+          stars.push(<img src={i<rating ? star : emptyStar} alt="error" height="25px" />);
+    }
+        setStars(stars);
+    }
+
+    useEffect(()=>{
+        createDiv(product.rating);
+    },[starCount]);
+
+
     return (
         <div className={styles.container}>
             <div className={styles.upper}>
@@ -62,7 +84,11 @@ const ProductDetailsContainer = (props) => {
                 <div className={styles.right}>
                     <div className={styles.contentsContainer}>
                         <div className={styles.name}>{product.name}</div>
-                        <div className={styles.review}>{product.reviewCount} customer users</div>
+                        <div className={styles.review}>
+                                {stars.map((star)=>{
+                                    return star
+                                })} &nbsp;&nbsp;
+                        {product.reviewCount} customer users</div>
                         <div className={styles.price}>${product.price}.00</div>
                         <div className={styles.details}>{product.about}</div>
                         <div className={styles.pairs}>

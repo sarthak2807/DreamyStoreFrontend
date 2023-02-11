@@ -78,6 +78,7 @@ const ProductList = (props) => {
         setDropdownValue("");
         setSortingValue("default");
         setPriceSlider(100);
+        setIsChecked(false);
     }
 
     useEffect(()=>{
@@ -165,7 +166,7 @@ const ProductList = (props) => {
         <div className={styles.body}>
             <div className={styles.left}>
                 <div className={styles.searchboxContainer}>
-                    <input type="text" className={styles.searchbox} onChange={(e)=>setInputValue(e.target.value)} onKeyUp={handleSearch} placeholder='Search'></input>
+                    <input type="text" className={styles.searchbox} value={inputValue} onChange={(e)=>setInputValue(e.target.value)} onKeyUp={handleSearch} placeholder='Search'></input>
                 </div>
                 <div className={styles.categoryContainer}>
                     <div className={styles.listTitle}>
@@ -206,13 +207,13 @@ const ProductList = (props) => {
                     <div className={styles.listTitle}>Price</div>
                     <div className={styles.price}>${priceSlider}.00</div>
                     <div className={styles.sliderContainer}>
-                        <toolcool-range-slider id="slider" min="100" max="2000" value={priceSlider} step="200" slider-width="100%" slider-height="10px" slider-bg="aliceblue" slider-bg-fill="blue" pointer-width="13px" pointer-height="13px"></toolcool-range-slider>
+                        <toolcool-range-slider id="slider" min="100" max="2000" value={priceSlider} step="200" slider-width="100%" slider-height="10px" mousewheel-disabled="true" slider-bg="aliceblue" slider-bg-fill="blue" pointer-width="13px" pointer-height="13px"></toolcool-range-slider>
                     </div>
                 </div>
                 <div className={styles.shippingContainer}>
                     <div className={styles.text}>Free Shipping</div>
                     <div className={styles.checkboxContainer}>
-                        <input type="checkbox" onChange={()=>setIsChecked(!isChecked)} className={styles.checkbox}></input>
+                        <input type="checkbox" id='checkbox' onChange={()=>setIsChecked(!isChecked)} className={styles.checkbox} checked={isChecked}></input>
                     </div>
                 </div>
                 <div className={styles.clearFilters} onClick={clearFilters}>Clear Filters</div>
