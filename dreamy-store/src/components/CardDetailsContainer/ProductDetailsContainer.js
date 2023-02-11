@@ -5,12 +5,22 @@ import ImageGallery from 'react-image-gallery';
 import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
 import star from '../assets/star.png';
 import emptyStar from '../assets/emptyStar.png';
+import { getProduct } from '../api/discover';
 
 const ProductDetailsContainer = (props) => {
     let {productId} = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState({});
     const [imageList, setImageList] = useState([]);
+
+    async function fetchProductDetails(productId){
+        const product = await getProduct(productId);
+        if(!product){
+            navigate("/");
+        } else{
+            setProduct(product);
+        }
+    }
     
     function loadImages(){
         let images = [];
@@ -26,20 +36,11 @@ const ProductDetailsContainer = (props) => {
 
     useEffect(()=>{
         loadImages();
+        setStarCount(product.rating);
     },[product]);
 
-    function findProduct(productId){
-        let product = props.allProductList.find(product => product._id === productId);
-        if(!product){
-            navigate("/");
-        }
-        setProduct(product);
-        props.setProductName(product.name);
-        setStarCount(product.rating);
-    }
-
     useEffect(()=>{
-        findProduct(productId);
+        fetchProductDetails(productId);
     },[])
 
     function goBack(){
@@ -59,7 +60,6 @@ const ProductDetailsContainer = (props) => {
     const [stars,setStars] = useState([]);
 
     function createDiv(rating){
-        var starContainer = document.getElementById("stars");
         let stars=[];
         for(var i=0; i<5; i++) {
           stars.push(<img src={i<rating ? star : emptyStar} alt="error" height="25px" />);

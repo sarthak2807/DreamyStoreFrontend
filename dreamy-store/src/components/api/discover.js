@@ -23,3 +23,9 @@ export async function getAllProducts() {
     const result = await axios.get(reqUrl);
     return result.data;
 }
+
+export async function getProduct(productId) {
+    const reqUrl = `https://dreamystorebackend.onrender.com/discover/api/productDetails/${productId}`;
+    const result = await axios.get(reqUrl);
+    return result.data;
+}
