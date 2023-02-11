@@ -19,6 +19,7 @@ const ProductDetailsContainer = (props) => {
             navigate("/");
         } else{
             setProduct(product);
+            props.setProductName(product.name);
         }
     }
     
