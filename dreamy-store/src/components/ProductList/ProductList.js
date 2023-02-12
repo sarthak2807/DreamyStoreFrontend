@@ -224,7 +224,7 @@ const ProductList = (props) => {
                         <div className={styles.gridIconContainer} onClick={function(){setCurrentView("grid"); localStorage.list = false;}}>
                             <img style={{boxShadow: currentView==="grid"&& "0px 0px 5px 3px grey"}} src={gridviewIcon} alt="error loading" className={styles.gridViewIcon}></img>
                         </div>
-                        <div className={styles.listIconContainer} style={{boxShadow: currentView==="list" && "0px 0px 5px 5px grey"}} onClick={function(){setCurrentView("list"); localStorage.list = true;}}>
+                        <div className={styles.listIconContainer} style={{boxShadow: currentView==="list" && "0px 0px 5px 4px grey"}} onClick={function(){setCurrentView("list"); localStorage.list = true;}}>
                             <img src={listviewIcon} alt="error loading" className={styles.listViewIcon}></img>
                         </div>
                     </div>
