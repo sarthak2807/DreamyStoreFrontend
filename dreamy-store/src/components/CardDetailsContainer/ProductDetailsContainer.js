@@ -6,6 +6,7 @@ import "../../../node_modules/react-image-gallery/styles/css/image-gallery.css";
 import star from '../assets/star.png';
 import emptyStar from '../assets/emptyStar.png';
 import { getProduct } from '../api/discover';
+import LoadingSpinner from '../Spinner/Spinner';
 
 const ProductDetailsContainer = (props) => {
     let {productId} = useParams();
@@ -14,6 +15,7 @@ const ProductDetailsContainer = (props) => {
     const [imageList, setImageList] = useState([]);
 
     async function fetchProductDetails(productId){
+        props.setSpinner(true);
         const product = await getProduct(productId);
         if(!product){
             navigate("/");
@@ -21,6 +23,7 @@ const ProductDetailsContainer = (props) => {
             setProduct(product);
             props.setProductName(product.name);
         }
+        props.setSpinner(false);
     }
     
     function loadImages(){
@@ -75,6 +78,7 @@ const ProductDetailsContainer = (props) => {
 
     return (
         <div className={styles.container}>
+            {props.spinner && <LoadingSpinner />}
             <div className={styles.upper}>
                 <div className={styles.backBtn} onClick={goBack}>BACK TO PRODUCTS</div>
             </div>

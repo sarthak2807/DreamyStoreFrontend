@@ -3,7 +3,7 @@ import styles from './GridViewContainer.module.css';
 import GridCard from '../GridCard/GridCard';
 import Empty from '../Empty/Empty';
 
-const GridViewContainer = (props) => {
+const GridViewContainer = (props)=> {
     const allProductList = props.allProductList;
     return (
         <div className={styles.container}>
@@ -13,13 +13,6 @@ const GridViewContainer = (props) => {
                     <GridCard product={product} key={index} />
                 )
             })}
-            {/* <GridCard />
-            <GridCard />
-            <GridCard />
-            <GridCard />
-            <GridCard />
-            <GridCard />
-            <GridCard /> */}
         </div>
     );
 };

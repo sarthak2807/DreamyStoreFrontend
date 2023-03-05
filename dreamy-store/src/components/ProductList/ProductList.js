@@ -5,6 +5,7 @@ import listviewIcon from '../assets/listviewIcon.png';
 import GridViewContainer from '../GridViewContainer/GridViewContainer';
 import ListViewContainer from '../ListViewContainer/ListViewContainer';
 import 'toolcool-range-slider';
+import LoadingSpinner from '../Spinner/Spinner';
 
 const ProductList = (props) => {
     const [inputValue, setInputValue] = useState("");
@@ -242,8 +243,9 @@ const ProductList = (props) => {
                     </div>
                 </div>
                 <div className={styles.cardsContainer}>
-                    {currentView === "grid" && <GridViewContainer syncSort={syncSort} allProductList={filteredProductList} />}
-                    {currentView === "list" && <ListViewContainer syncSort={syncSort} allProductList={filteredProductList} />}
+                    {props.spinner && <LoadingSpinner />}
+                    {currentView === "grid" && !props.spinner && <GridViewContainer syncSort={syncSort} allProductList={filteredProductList} />}
+                    {currentView === "list" && !props.spinner && <ListViewContainer syncSort={syncSort} allProductList={filteredProductList} />}
                 </div>
             </div>
         </div>

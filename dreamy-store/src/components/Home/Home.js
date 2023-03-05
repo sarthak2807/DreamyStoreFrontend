@@ -13,10 +13,14 @@ const Home = () => {
     const [allProductList, setAllProductList] = useState([]);
     const [productName, setProductName] = useState("");
     const [nav, setNav] = useState(false);
+    
+    const [spinner, setSpinner] = useState(false);   
 
     async function fetchAllProducts(){
+        setSpinner(true);
         const list = await getAllProducts();
         setAllProductList(list);
+        setSpinner(false);
     }
 
     async function fetchCategories(){
@@ -49,8 +53,8 @@ const Home = () => {
             <div className={styles.contentsContainer}>
                 <BrowserRouter>
                     <Routes>
-                        <Route path="/" element = { <ProductList categoryList={categoryList} colorList={colorList} companyList={companyList} allProductList={allProductList} /> }></Route>
-                        <Route path="/:productId" element = { <ProductDetailsContainer allProductList={allProductList} setProductName={setProductName} nav={nav} setNav={setNav} /> }></Route>
+                        <Route path="/" element = { <ProductList categoryList={categoryList} colorList={colorList} spinner={spinner} companyList={companyList} allProductList={allProductList} /> }></Route>
+                        <Route path="/:productId" element = { <ProductDetailsContainer spinner={spinner} setSpinner={setSpinner} allProductList={allProductList} setProductName={setProductName} nav={nav} setNav={setNav} /> }></Route>
                     </Routes>
                 </BrowserRouter>
             </div>
